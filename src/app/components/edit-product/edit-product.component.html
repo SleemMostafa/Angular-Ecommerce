@@ -1,0 +1,164 @@
+<div class="container">
+  <form #prdForm="ngForm" (ngSubmit)="EditProduct()">
+    <div class="mb-3">
+      <label for="pName" class="form-label">Product Name</label>
+      <input
+        #prdName="ngModel"
+        type="text"
+        [(ngModel)]="currProduct.name"
+        class="form-control"
+        [class.is-valid]="prdName.valid"
+        [class.is-invalid]="prdName.invalid && prdName.touched"
+        name="pName"
+        id="PName"
+        required
+        minlength="3"
+      />
+      <div [hidden]="prdName.valid || prdName.untouched">
+        <small
+          *ngIf="prdName.errors?.['required']"
+          id="helpId"
+          class="form-text text-muted d-block"
+        >
+          <div class="alert alert-danger" role="alert">Name is Required</div>
+        </small>
+        <small
+          *ngIf="prdName.errors?.['minlength']"
+          id="helpId2"
+          class="form-text text-muted d-block"
+        >
+          <div class="alert alert-danger" role="alert">
+            Product Name must be 3 letters at least
+          </div>
+        </small>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="pDescription" class="form-label">Product Description</label>
+      <input
+        #prdDescription="ngModel"
+        type="text"
+        [(ngModel)]="currProduct.description"
+        class="form-control"
+        [class.is-valid]="prdDescription.valid"
+        [class.is-invalid]="prdDescription.invalid && prdDescription.touched"
+        name="pDescription"
+        id="pDescription"
+        required
+        minlength="15"
+        maxlength="40"
+      />
+      <div [hidden]="prdDescription.valid || prdDescription.untouched">
+        <small
+          *ngIf="prdDescription.errors?.['required']"
+          id="helpId"
+          class="form-text text-muted d-block"
+        >
+          <div class="alert alert-danger" role="alert">
+            Description is Required
+          </div>
+        </small>
+        <small
+          *ngIf="prdDescription.errors?.['maxlength']"
+          id="helpId3"
+          class="form-text text-muted d-block"
+        >
+          <div class="alert alert-danger" role="alert">
+            Description must be 40 letters at more
+          </div></small
+        >
+        <small
+          *ngIf="prdDescription.errors?.['minlength']"
+          id="helpId2"
+          class="form-text text-muted d-block"
+        >
+          <div class="alert alert-danger" role="alert">
+            Description must be 15 letters at least
+          </div></small
+        >
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="pPrice" class="form-label">Product Price</label>
+      <input
+        type="number"
+        #prdPrice="ngModel"
+        [(ngModel)]="currProduct.price"
+        class="form-control"
+        name="pPrice"
+        id="pPrice"
+        required
+        min="0"
+        [class.is-valid]="prdPrice.valid" [class.is-invalid]="prdPrice.invalid && prdPrice.touched"
+      />
+      <div [hidden]="prdPrice.valid || prdPrice.untouched">
+        <small id="helpId" class="form-text text-muted">
+            <div class="alert alert-danger" role="alert">
+                Price is Required
+              </div>
+        </small>
+    </div>
+    </div>
+    <div class="mb-3">
+      <label for="pQuant" class="form-label">Product Quantity</label>
+      <input
+        #prdQuantity="ngModel"
+        type="number"
+        [(ngModel)]="currProduct.quantity"
+        class="form-control"
+        name="pQuant"
+        id="pQuant"
+        required
+        min="0"
+        [class.is-valid]="prdQuantity.valid" [class.is-invalid]="prdQuantity.invalid && prdQuantity.touched"
+      />
+    <div [hidden]="prdQuantity.valid || prdQuantity.untouched" >
+      <small id="helpId" class="form-text text-muted">
+        <div class="alert alert-danger" role="alert">
+            Quantity is Required
+          </div>
+      </small>
+    </div>
+    </div>
+    <div class="mb-3">
+      <label for="CatSel" class="form-label">Select Category</label>
+      <select
+        #prdCategory="ngModel"
+        class="form-control"
+        [(ngModel)]="currProduct.cateogryID"
+        name="cat"
+        id="CatSel"
+        title="catgory"
+        required
+        [class.is-valid]="prdCategory.valid" [class.is-invalid]="prdCategory.invalid && prdCategory.touched"
+      >
+        <option *ngFor="let category of categoryList" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+      <div [hidden]="prdCategory.valid||prdCategory.untouched">
+        <div class="alert alert-danger" role="alert">
+            Category is Required
+          </div>
+      </div>
+    </div>
+    <app-upload  (onUploadFinished)="uploadFinished($event)"></app-upload>
+    <div class="mb-3">
+        <label for="pImg" class="form-label">purchaseDate</label>
+        <input
+        type="date"
+        class="form-control"
+        name="pImg"
+        id="pImg"
+        [(ngModel)]="currProduct.purchaseDate"        
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+    </div>
+    <button [disabled]="prdForm.invalid" type="submit" class="btn btn-success">
+      Submit
+    </button>
+    <button [routerLink]="['/Product']" class="btn btn-secondary mx-3">
+      Cancel
+    </button>
+  </form>
+</div>

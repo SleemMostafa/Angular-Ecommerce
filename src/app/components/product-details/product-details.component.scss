@@ -1,0 +1,17 @@
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://th.bing.com/th/id/OIP.jnXsXz0pAMiPY1KD_VpUvwHaGA?pid=ImgDet&rs=1');
+    background-size: cover;
+  }
+
+  #close-icon{
+    margin-left: auto;
+    order: 2;
+    font-weight: bolder;
+  }
+  #close-icon:hover{
+    cursor: pointer;
+  }

@@ -1,0 +1,12 @@
+<form [formGroup]="roleUser" class="px-4 form" (ngSubmit)="AddRole()">
+    <div class="example-container">
+        <mat-form-field  >
+        <input formControlName="userId"  matInput placeholder="User Id">
+        </mat-form-field>
+    
+        <mat-form-field  >
+            <input formControlName="roleName" matInput placeholder="Role">
+        </mat-form-field>
+    </div>
+    <button type="submit" class="btn btn-primary">Assgin Role</button>
+</form>

@@ -1,0 +1,128 @@
+<div class="container" >
+    <form [formGroup]="newProduct" (ngSubmit)="CreateProduct()">
+    <div class="mb-3">
+        <label for="pName" class="form-label">Product Name</label>
+        <input
+        type="text"
+        class="form-control"
+        name="pName"
+        id="PName"
+        formControlName="name"
+        [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.touched">
+        <div [hidden]="name.valid || name.untouched">
+            <small *ngIf="name.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                <div class="alert alert-danger" role="alert">
+                    Name is Required
+                </div> 
+            </small>
+            <small *ngIf="name.errors?.['required']" id="helpId" class="form-text text-muted d-block">User Name is
+                <div class="alert alert-danger" role="alert">
+                    Product Name must be 3 letters at least
+                </div>
+            </small>
+          </div>
+    </div>
+    <div class="mb-3">
+        <label for="pDescription" class="form-label">Product Description</label>
+        <input
+        type="text"
+        class="form-control"
+        name="pDescription"
+        id="pDescription"
+        formControlName="description"
+        [class.is-valid]="description.valid" [class.is-invalid]="description.invalid && description.touched">
+          <div [hidden]="description.valid || description.untouched">
+            <small *ngIf="description.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                <div class="alert alert-danger" role="alert">
+                    Description is Required
+                </div> 
+            </small>
+            <small *ngIf="description.errors?.['minlength']" id="helpId2" class="form-text text-muted d-block"> 
+                <div class="alert alert-danger" role="alert">
+                    must be 15 letter or more
+                </div>
+            </small>
+            <small *ngIf="description.errors?.['maxLength']" id="helpId2" class="form-text text-muted d-block"> 
+                <div class="alert alert-danger" role="alert">
+                    must be less 40 letter
+                </div>
+            </small>
+          </div>
+    </div>
+   
+    <div class="mb-3">
+        <label for="pPrice" class="form-label">Product Price</label>
+        <input
+        type="number"
+        class="form-control"
+        name="pPrice"
+        id="pPrice"
+        formControlName="price"
+        [class.is-valid]="price.valid" [class.is-invalid]="price.invalid && price.touched"
+        />
+          <div [hidden]="price.valid || price.untouched">
+            <small *ngIf="price.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                <div class="alert alert-danger" role="alert">
+                    Price is Required
+                </div> 
+            </small>
+          </div>
+    </div>
+    <div class="mb-3">
+        <label for="pQuant" class="form-label">Product Quantity</label>
+        <input
+        type="number"
+        class="form-control"
+        name="pQuant"
+        id="pQuant"
+        value="1"
+        formControlName="quantity"
+        [class.is-valid]="quantity.valid" [class.is-invalid]="quantity.invalid && quantity.touched" 
+        />
+        <div [hidden]="quantity.valid || quantity.untouched">
+            <small *ngIf="quantity.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                <div class="alert alert-danger" role="alert">
+                    quantity is Required
+                </div> 
+            </small>
+          </div>
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Select Category</label>
+        <select
+        class="form-control"
+        name="category"
+        id="category"
+        title="category"
+        required
+        formControlName="cateogryID"
+        [class.is-valid]="cateogryID.valid" [class.is-invalid]="cateogryID.invalid && cateogryID.touched"
+        >
+        <option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</option>
+        </select>
+        <div [hidden]="cateogryID.valid || cateogryID.untouched">
+            <small *ngIf="cateogryID.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                <div class="alert alert-danger" role="alert">
+                    Category is Required
+                </div> 
+            </small>
+        </div>
+    </div>
+    <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+    <div class="mb-3">
+        <label for="pImg" class="form-label">purchaseDate</label>
+        <input
+        type="date"
+        class="form-control"
+        name="pImg"
+        id="pImg"
+        formControlName="purchaseDate"
+        />
+        <small id="helpId" class="form-text text-muted"></small>
+    </div>
+    <button   type="submit" class="btn btn-success">Submit</button>
+    <button [routerLink]="['/Home']" class="btn btn-secondary mx-3">
+        Cancel
+      </button>
+    </form>
+</div>

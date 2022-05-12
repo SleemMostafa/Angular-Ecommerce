@@ -1,0 +1,21 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div class="content-container" >
+      <mat-icon id="close-icon"  (click)="CloseDialog()" ><mat-icon>close</mat-icon></mat-icon>
+    </div>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{currProduct.name}}</mat-card-title>
+  </mat-card-header>
+  <img style="width: 50%; height: 70%;" mat-card-image [src]="createImgPath(currProduct.photo)" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+     <span>Description: </span> {{currProduct.description}}
+    </p>
+    <p>
+     <span>Price: </span> {{currProduct.price|currency}}
+     </p>
+     <p>
+      <span>Quantity: </span> {{currProduct.quantity}}
+     </p>
+  </mat-card-content>
+</mat-card>

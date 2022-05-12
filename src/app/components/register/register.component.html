@@ -1,0 +1,235 @@
+<div class="container-fluid">
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+            </div>
+            <form class="user" [formGroup]="userRegisterForm" (ngSubmit)="RegisterNew()">
+            <!--User Name-->
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="userName"
+                    placeholder="userName"
+                    formControlName="userName"
+                    [class.is-valid]="userName.valid" [class.is-invalid]="userName.invalid && userName.touched"
+                  />
+                  <div [hidden]="userName.valid || userName.untouched">
+                    <small *ngIf="userName.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                        <div class="alert alert-danger" role="alert">
+                            User name is required
+                        </div>
+                    </small>
+                    <small *ngIf="userName.errors?.['minlength']" id="helpId2" class="form-text text-muted d-block">
+                        <div class="alert alert-danger" role="alert">
+                            User name must 5 letter at lest
+                        </div>
+                    </small>
+                    <small *ngIf="userName.errors?.['forbiddenName']" id="helpId3" class="form-text text-muted d-block">
+                        <div class="alert alert-danger" role="alert">
+                        User name can't be
+                        {{userName.errors?.['forbiddenName']?.value}}
+                        </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="email"
+                      class="form-control form-control-user"
+                      id="email"
+                      placeholder="Email Address"
+                      formControlName="email"
+                      [class.is-valid]="email.valid" [class.is-invalid]="email.invalid && email.touched"
+                    />
+                    <div [hidden]="email.valid || email.untouched">
+                      <small *ngIf="email.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                          <div class="alert alert-danger" role="alert">
+                              Email is required
+                          </div>
+                      </small>
+                      <small *ngIf="email.errors?.['email']" id="helpId2" class="form-text text-muted d-block">
+                          <div class="alert alert-danger" role="alert">
+                              Email is not valid
+                          </div>
+                      </small>
+                    </div>
+                  </div>
+              </div>
+                <!--User Address-->
+              <div class="form-group row" formGroupName="address">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="city"
+                    name="city"
+                    placeholder="City"
+                    formControlName="city"
+                    [class.is-valid]="address.valid" [class.is-invalid]="address.invalid && address.touched"                
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="street"
+                    name="street"
+                    placeholder="Street"
+                    formControlName="street"
+                    [class.is-valid]="address.valid" [class.is-invalid]="address.invalid && address.touched"                
+                  />
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="postalCode"
+                    name="postalCode"
+                    placeholder="postalCode"
+                    formControlName="postalCode"
+                    [class.is-valid]="address.valid" [class.is-invalid]="address.invalid && address.touched"                
+                  />
+                </div>
+              </div>
+              
+                <!--User Mobile-->
+              <div class="form-group row" formArrayName="PhoneNumber" >
+                <div class="col-sm-6 mb-3 mb-sm-0" *ngFor="let PhoneNumber of mobileList.controls;let i =index">
+                  <input
+                    #mobileno
+                    type="text"
+                    class="form-control form-control-user"
+                    id="PhoneNumber{{i+1}}"
+                    name="PhoneNumber{{i+1}}"
+                    pattern="^01[0-2,5]{1}[0-9]{8}$"
+                    [formControlName]="i"
+                    required
+                    placeholder="Mobile  {{i+1}}"
+
+                    [class.is-invalid]="PhoneNumber.invalid && PhoneNumber.touched"
+                    />
+                    <div [hidden]="PhoneNumber.valid || PhoneNumber.untouched">
+                        <small *ngIf="PhoneNumber.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                            <div class="alert alert-danger" role="alert">
+                                Mobile is required
+                            </div>
+                        </small>
+                        <small *ngIf="PhoneNumber.errors?.['pattern']" id="helpId2" class="form-text text-muted d-block">
+                            <div class="alert alert-danger" role="alert">
+                                Mobile is not valid
+                            </div>
+                        </small>
+                      </div>
+                    <button type="button" name="addmobile" class="btn btn-primary mx-2 mt-2 mb-2" id="addmobile" [hidden]="!mobileno.value || !PhoneNumber.valid" (click)="AddNewMobile()">+</button>
+                    <button type="button" name="removmobile" class="btn btn-danger mx-2 mt-2 mb-2" id="removmobile" [hidden]="i < 1" (click)="RemoveMobile()">--</button>
+                </div>
+              </div>
+                <!--User Days-->
+              <div class="form-group row">
+                <label class="form-label">Specific day please</label>
+                <div class="btn-group" role="group">
+                  <input
+                    type="radio"
+                    formControlName="day"
+                    value="Monday"
+                    class="btn-check"
+                    name="day"
+                    id="Monday"
+                    autocomplete="off"
+                    required
+                    (change)="updateReachedOtherValidaiton()"
+                  />
+                  <label class="btn btn-outline-primary" for="Monday">Monday</label>
+                  <input
+                  type="radio"
+                  formControlName="day"
+                  value="Thursday"
+                  class="btn-check"
+                  name="day"
+                  id="Thursday"
+                  autocomplete="off"
+                  required
+                  (change)="updateReachedOtherValidaiton()"
+                />
+                <label class="btn btn-outline-primary" for="Thursday">Thursday</label>
+                <input
+                type="radio"
+                formControlName="day"
+                value="Other"
+                class="btn-check"
+                name="day"
+                id="Other"
+                autocomplete="off"
+                required
+                (change)="updateReachedOtherValidaiton()"
+              />
+              <label class="btn btn-outline-primary" for="Other">Other</label>
+                </div>
+
+              </div>
+              <div class="mb-3" [hidden]="day.value!='Other'">
+                <label for="specifyDay" class="form-label">Please specify other:</label>
+                <input type="text" formControlName="specifyDay" class="form-control form-control-user" name="specifyDay" id="specifyDay"
+                  placeholder="">
+              </div>
+                <!--User Password-->
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="password"
+                    formControlName="password"
+                    class="form-control form-control-user"
+                    id="uPass"
+                    name="password"
+                    placeholder="Password"
+                    [class.is-valid]="password.valid" [class.is-invalid]="password.invalid && password.touched"
+                  />
+                  <div [hidden]="password.valid || password.untouched">
+                    <small *ngIf="password.errors?.['required']" id="helpId" class="form-text text-muted d-block">
+                        <div class="alert alert-danger" role="alert">
+                          password is required
+                        </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="password"
+                    class="form-control form-control-user"
+                    id="uPassConfirm"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    formControlName="confirmPassword"
+                    [class.is-valid]="confirmPassword.valid" [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched"
+                  />
+                </div>
+              </div>
+              <div *ngIf="userRegisterForm.errors?.['passwordMismatch'] && (confirmPassword.touched || confirmPassword.touched)"
+                class="cross-validation-error-message alert alert-danger">
+                Password and confirm password don't match.
+              </div>
+              <button type="submit" [disabled]="userRegisterForm.invalid" class="btn btn-primary btn-user btn-block">
+                Register Account
+              </button>
+            </form>
+            <hr />
+            <div class="text-center">
+              <a class="small" href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <div class="text-center">
+              <a class="small" href="login.html"
+                >Already have an account? Login!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
